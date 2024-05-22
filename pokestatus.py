@@ -10,10 +10,15 @@ def get_pokemons():
 
     return dict_pokemons
 
+def search_pokemon_by_id(dict, id):
+    if id in dict:
+        return dict[id]
+    else:
+        print("Pokemon not found")
 
 def main():
     pokemons = get_pokemons()
-    print(pokemons)
+    print(search_pokemon_by_id(pokemons, "347"))
     
 if __name__ == "__main__":
     main()
