@@ -1,4 +1,6 @@
 import csv
+import pandas as pd
+
 def get_pokemons():
     dict_pokemons = {}
     with open("pokemon.csv","r") as pokemon_file:
@@ -42,8 +44,23 @@ def get_legendary_pokemons(list, legendary):
             legendary_list.append(pokemon[0])
     return legendary_list
 
+def get_pokemons_pandas():
+    df = pd.read_csv("pokemon.csv")
+    print(df.head())
+    #print(df.info())
+    print(df[df.Name=='Charmander'])
+    # using | (or) & (and)
+    print(df[(df['Type 1']=='Grass') & (df.Generation == 1)])
+    df_pyschic_pokemons = df[(df.Generation.isin([1,3,4])) & (df["Type 1"]=='Psychic')]
+    df.reset_index(drop = True)
+    print(df_pyschic_pokemons)
+    print(df.head())
+
 def main():
 
+    get_pokemons_pandas()
+
+    '''
     pokemons = get_pokemons()
     pokemon_list = transform_dict_to_list(pokemons)
     generation_list = []
@@ -61,6 +78,7 @@ def main():
     print(generation_list)
 
     print(get_legendary_pokemons(pokemon_list, "True"))
+    '''
 
 if __name__ == "__main__":
     main()
