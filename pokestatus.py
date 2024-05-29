@@ -46,7 +46,7 @@ def get_legendary_pokemons(list, legendary):
 
 def get_pokemons_pandas():
     df = pd.read_csv("pokemon.csv")
-    print(df.head())
+    print(df.head(2))
     #print(df.info())
     print(df[df.Name=='Charmander'])
     # using | (or) & (and)
@@ -54,7 +54,28 @@ def get_pokemons_pandas():
     df_pyschic_pokemons = df[(df.Generation.isin([1,3,4])) & (df["Type 1"]=='Psychic')]
     df.reset_index(drop = True)
     print(df_pyschic_pokemons)
-    print(df.head())
+    #add column
+    df['New Column'] = 'Teste'
+    df['Total Attack'] = df.Attack + df['Sp. Atk']
+    df['Upper Name'] = df.Name.apply(str.upper)
+    
+    get_last_name = lambda x: x.split()[-1]
+    df['last_name'] = df.Name.apply(get_last_name)
+
+    '''
+    total_earned = lambda row: (row.hourly_wage * 40) + ((row.hourly_wage * 1.5) * (row.hours_worked - 40)) \
+	if row.hours_worked > 40 \
+    else row.hourly_wage * row.hours_worked
+  
+    df['total_earned'] = df.apply(total_earned, axis = 1)
+    '''
+    '''0if I use .columns in the current Data Frame, I can change all the columns name. 
+        exp: df.columns = [..., 'Type_1', 'Type_2', 'Sp._atk', ...]
+    '''
+
+    df.rename(columns = {'Type 1': 'Type_1', 'Type 2': 'Type_2'}, inplace=True)
+
+    print(df.head(2))
 
 def main():
 
